@@ -1,0 +1,13 @@
+applications:
+  #Application
+  - name: delivery-shipment-process-jobs
+    instances: 1
+    memory: 1G
+    disk_quota: 512M
+    path: target/delivery-shippment-jobs-0.0.1-SNAPSHOT.jar
+    buildpacks:
+      - https://github.com/cloudfoundry/java-buildpack.git#v4.27
+    env:
+      JBP_CONFIG_DEBUG: '{enabled: true}'
+    services:
+      - dest_mta_process

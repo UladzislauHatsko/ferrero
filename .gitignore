@@ -1,0 +1,36 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+target
+.classpath
+.project
+.settings
+/.apt_generated/
+*.tern-project
+
+# Other
+bin
+*.factorypath
+*.checkstyle
+
+#IntelliJ IDEA
+*.iml
+.idea
+/.metadata/
+/.recommenders/
+/Servers
+*.db
+
+#Maven
+*.versionsBackup
