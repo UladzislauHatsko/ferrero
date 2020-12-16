@@ -12,8 +12,6 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
  */
 public final class DateUtils {
 
-    private static final String DEFAULT_DATE_PATTERN = "yyyyMMdd";
-
     private DateUtils() {
     }
 

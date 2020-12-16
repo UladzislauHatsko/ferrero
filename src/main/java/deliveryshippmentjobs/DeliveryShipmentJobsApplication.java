@@ -41,7 +41,6 @@ public class DeliveryShipmentJobsApplication {
 
     public static void main(String[] args) {
         run(DeliveryShipmentJobsApplication.class, args);
-
     }
 
 }
