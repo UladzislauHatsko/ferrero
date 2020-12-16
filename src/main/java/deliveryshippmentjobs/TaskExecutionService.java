@@ -30,7 +30,6 @@ public class TaskExecutionService {
     public void executeTask(long jobId) {
         log.info("JOB ID {} : start execution", jobId);
         TaskConfiguration taskConfiguration = taskConfigurationRepository.findById(jobId).orElseThrow(EntityNotFoundException::new);
-        log.info("JOB ID {} : configuration {}", jobId, taskConfiguration);
 
         if (DELIVERY.equals(taskConfiguration.getObjectType())) {
             deliveryProcessService.processDeliveryTask(taskConfiguration);

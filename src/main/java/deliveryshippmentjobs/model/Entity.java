@@ -8,7 +8,11 @@ public enum Entity {
 
     DELIVERY_PROCESS("DeliveryProcess"),
     SHIPMENT_PROCESS("ShipmentProcess"),
-    SHIPMENT_PROCESS_DELIVERIES("ShipmentProcessDeliveries");
+    SHIPMENT_PROCESS_DELIVERIES("ShipmentProcessDeliveries"),
+    DELIVERY_COMPLETED_EVENT("DLVDeliveryCompletedEvent"),
+    SHIPMENT_COMPLETED_WITH_POD_EVENT("SHPTransportationCompletedWithPODEvent"),
+    SHIPMENT_COMPLETED_WITH_ISSUES_EVENT("SHPTransportationCompletedWithIssuesEvent"),
+    SHIPMENT_COMPLETED_UNPLANNED_EVENT("SHPTransportationCompletedUnplannedEvent");
 
     @Getter
     private final String value;

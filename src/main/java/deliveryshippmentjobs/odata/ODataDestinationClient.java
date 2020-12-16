@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ODataDestinationClient extends HttpDestinationClient {
 
-    @Value("${destination.prefix}")
-    private String prefix;
+    @Value("${destination.read.prefix}")
+    private String readPrefix;
+    @Value("${destination.write.prefix}")
+    private String writePrefix;
 
     @Override
     protected DestinationAlias destinationName() {
@@ -20,7 +22,12 @@ public class ODataDestinationClient extends HttpDestinationClient {
     }
 
     @Override
-    protected String schemaPrefix() {
-        return prefix;
+    protected String schemaReadPrefix() {
+        return readPrefix;
+    }
+
+    @Override
+    protected String schemaWritePrefix() {
+        return writePrefix;
     }
 }

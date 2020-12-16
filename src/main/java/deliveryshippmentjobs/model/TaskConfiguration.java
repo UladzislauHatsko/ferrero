@@ -1,24 +1,37 @@
 package deliveryshippmentjobs.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author uladzislau.hatsko
  */
 @Entity
+@Table(name = "JOB_CONFIGURATION")
 public class TaskConfiguration {
 
     @Id
+    @Column(name = "JOB_ID")
     private long jobId;
+    @Column(name = "OBJECT_TYPE")
     private String objectType;
+    @Column(name = "DELIVERY_TYPE")
     private String deliveryType;
+    @Column(name = "SHIPPING_POINT")
     private String shippingPoint;
+    @Column(name = "DELIVERY_STATUS")
     private String deliveryStatus;
+    @Column(name = "DAYS_BACK")
     private Integer daysBack;
+    @Column(name = "SHIPMENT_STATUS")
     private String shipmentStatus;
+    @Column(name = "REASON_CODE")
     private String reasonCode;
+    @Column(name = "REFERENCE_DATE")
     private String referenceDate;
+    @Column(name = "CRON")
     private String cron;
 
     public TaskConfiguration(long jobId, String objectType, String cron, String deliveryType, Integer daysBack, String referenceDate, String shippingPoint,

@@ -26,14 +26,13 @@ public final class JsonUtils {
     private JsonUtils() {
     }
 
-    public static <T> String toJson(T object) {
+    public static <T> String to(T object) {
         ObjectWriter ow = MAPPER_WITHOUT_ROOT_NAME.writer().withDefaultPrettyPrinter();
 
         try {
             return ow.writeValueAsString(object);
         } catch (IOException e) {
             log.error("Cannot serialize object {}", object);
-            log.error("Error:", e);
             throw new RuntimeException(format("Cannot serialize object %s.", object), e);
         }
     }
