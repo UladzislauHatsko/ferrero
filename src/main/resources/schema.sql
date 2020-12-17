@@ -36,4 +36,4 @@ VALUES (1, 'DELIVERY', 'ZC01, ZNL2, ZI01, ZC05, ZC14', '10, 30, 40, 50, 60, 70, 
         'AL02, CO10, CO20, CO30, CO40, CO50, CO60, CO70, CO80, PW1, RLS, RN7, RW7', 70, 'DELIVERY_DATE', null, 'Technical closure', '*/10 * * * * *'),
        (11, 'DELIVERY', 'ZOX1', '10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20',
         'AL02, CO10, CO20, CO30, CO40, CO50, CO60, CO70, CO80, PW1, RLS, RN7, RW7', 21, 'DELIVERY_DATE', null, 'Technical closure', '*/10 * * * * *'),
-       (12, 'SHIPMENT', null, null, null, null, null, '10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 20', 'Technical closure', '*/10 * * * * *');
+       (12, 'SHIPMENT', null, null, null, null, null, '10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 20', 'Technical closure', '0 * * ? * *');

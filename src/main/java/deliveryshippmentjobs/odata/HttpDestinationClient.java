@@ -30,19 +30,14 @@ public abstract class HttpDestinationClient {
         return JsonUtils.from(response, clazz);
     }
 
-    public String destinationUri() {
-        HttpDestination httpDestination = getDestination(destinationName().name()).asHttp();
-        return httpDestination.getUri().toString();
-    }
-
-    protected abstract DestinationAlias destinationName();
+    protected abstract String destinationName();
 
     protected abstract String schemaReadPrefix();
 
     protected abstract String schemaWritePrefix();
 
     private String httpGet(String path) {
-        HttpDestination httpDestination = getDestination(destinationName().name()).asHttp();
+        HttpDestination httpDestination = getDestination(destinationName()).asHttp();
         HttpClient client = getHttpClient(httpDestination);
 
         try {
@@ -55,19 +50,7 @@ public abstract class HttpDestinationClient {
         } catch (IOException e) {
             log.error("Connection was aborted", e);
         }
-
         return EMPTY;
-    }
-
-    public <T> T post(String path, Class<T> clazz, String jsonBody) {
-        try {
-            HttpResponse response = httpPost(path, jsonBody);
-            String responseContent = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
-            return JsonUtils.from(responseContent, clazz);
-        } catch (IOException ioException) {
-            log.error("Connection was aborted");
-            return null;
-        }
     }
 
     public <T> int post(String path, T object) {
@@ -81,22 +64,12 @@ public abstract class HttpDestinationClient {
         }
     }
 
-    public int post(String path, String jsonBody) {
-        try {
-            HttpResponse httpResponse = httpPost(path, jsonBody);
-            return httpResponse.getStatusLine().getStatusCode();
-        } catch (IOException ioException) {
-            log.error("Connection was aborted");
-            return 500;
-        }
-    }
-
     private HttpResponse httpPost(String path, String jsonBody) throws IOException {
-        HttpDestination httpDestination = getDestination(destinationName().name()).asHttp();
+        HttpDestination httpDestination = getDestination(destinationName()).asHttp();
         HttpClient client = getHttpClient(httpDestination);
 
         String requestUrl = httpDestination.getUri() + schemaWritePrefix() + replaceSpecialSymbols(path);
-        log.info("POST: {} with body: {}", requestUrl, jsonBody);
+        log.debug("POST: {} with body: {}", requestUrl, jsonBody);
         HttpPost httpPost = new HttpPost(requestUrl);
 
         httpPost.setEntity(new StringEntity(jsonBody));

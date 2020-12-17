@@ -46,15 +46,4 @@ public final class JsonUtils {
         }
         return null;
     }
-
-    public static <T> T fromWithoutRootName(String jsonString, Class<T> clazz) {
-        notBlank(jsonString);
-
-        try {
-            return MAPPER_WITHOUT_ROOT_NAME.readValue(jsonString, clazz);
-        } catch (IOException e) {
-            log.error("Cannot parse string '{}' to object {}", jsonString, clazz, e);
-        }
-        return null;
-    }
 }

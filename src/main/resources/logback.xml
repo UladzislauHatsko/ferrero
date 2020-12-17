@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false">
+    <appender name="STDOUT-JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="com.sap.hcp.cf.logback.encoder.JsonEncoder"/>
+    </appender>
+    <!-- for local development, you may want to switch to a more human-readable layout -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %-5level [%thread] - [%logger] [%mdc] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <springProfile name="cloud">
+        <root level="${LOG_ROOT_LEVEL:-INFO}">
+            <!-- Use 'STDOUT' instead for human-readable output -->
+            <appender-ref ref="STDOUT-JSON"/>
+        </root>
+    </springProfile>
+    <springProfile name="prod">
+        <root level="${LOG_ROOT_LEVEL:-INFO}">
+            <!-- Use 'STDOUT' instead for human-readable output -->
+            <appender-ref ref="STDOUT-JSON"/>
+        </root>
+    </springProfile>
+    <springProfile name="dev">
+        <root level="${LOG_ROOT_LEVEL:-DEBUG}">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+    <logger name="com.sap.hcp.cf" level="INFO"/>
+</configuration>

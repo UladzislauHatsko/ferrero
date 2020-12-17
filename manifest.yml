@@ -11,3 +11,4 @@ applications:
       JBP_CONFIG_DEBUG: '{enabled: true}'
     services:
       - dest_mta_process
+      - DEV_APPLICATION_LOG

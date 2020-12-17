@@ -29,7 +29,8 @@ public class PostEventsService {
             if (isNotBlank(altKey) && isNotBlank(reasonCode)) {
                 int httpStatus = oDataDestinationClient.post(event.getValue(), eventDTO);
                 if (httpStatus < HTTP_MULT_CHOICE) {
-                    log.info("JOB ID {} : Event {} posted successfully: altKey = {}, eventReasonText = {} ", jobId, event.getValue(), altKey, reasonCode);
+                    log.info("JOB ID {} : {} Event {} posted successfully: altKey = {}, eventReasonText = {} ", jobId, taskConfiguration.getObjectType(),
+                            event.getValue(), altKey, reasonCode);
                 } else {
                     log.error("JOB ID {} : Post Event {} failed with Response status {}", jobId, event.getValue(), httpStatus);
                 }
@@ -37,7 +38,7 @@ public class PostEventsService {
                 log.error("JOB ID {} : Not valid data for event posting - altKey = {}, eventReasonText = {}", jobId, altKey, reasonCode);
             }
         } catch (Exception ex) {
-            log.error("JOB ID {} : Event posting failed with message : {}", jobId, ex.getMessage());
+            log.error("JOB ID {} : {} Event posting failed with message : {}", jobId, taskConfiguration.getObjectType(), ex.getMessage());
         }
     }
 }

@@ -33,9 +33,9 @@ public class DeliveryProcessService {
         List<DeliveryProcess> deliveryProcesses = readEntitiesService.readDeliveries(taskConfiguration);
         log.info("JOB ID {} : {} DeliveryProcesses extracted", jobId, deliveryProcesses.size());
         Set<String> altKeys = deliveryProcesses.stream().map(DeliveryProcess::getAltKey).collect(Collectors.toSet());
-//        log.info("JOB ID {} : DeliveryProcess altKeys extracted : {}", jobId, String.join(", ", altKeys));
+        log.debug("JOB ID {} : DeliveryProcess altKeys extracted : {}", jobId, String.join(", ", altKeys));
 
-//        postDeliveryCompleteEvent(taskConfiguration, deliveryProcesses);
+        postDeliveryCompleteEvent(taskConfiguration, deliveryProcesses);
     }
 
     private void postDeliveryCompleteEvent(TaskConfiguration taskConfiguration, List<DeliveryProcess> deliveryProcessesFiltered) {

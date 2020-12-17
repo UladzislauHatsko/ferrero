@@ -15,10 +15,12 @@ public class ODataDestinationClient extends HttpDestinationClient {
     private String readPrefix;
     @Value("${destination.write.prefix}")
     private String writePrefix;
+    @Value("${destination.name}")
+    private String destinationName;
 
     @Override
-    protected DestinationAlias destinationName() {
-        return DestinationAlias.GTTDeliveryProcessFerreroV2;
+    protected String destinationName() {
+        return destinationName;
     }
 
     @Override

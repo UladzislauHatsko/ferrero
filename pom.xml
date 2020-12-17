@@ -18,6 +18,8 @@
         <java.version>1.8</java.version>
         <projectlombokVersion>1.18.10</projectlombokVersion>
         <scp-cf.version>3.6.0</scp-cf.version>
+        <cf.logging.version>3.1.0</cf.logging.version>
+        <logback.classic.version>1.2.3</logback.classic.version>
     </properties>
 
     <dependencies>
@@ -78,6 +80,17 @@
                     <artifactId>api</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!--        Logging-->
+        <dependency>
+            <groupId>com.sap.hcp.cf.logging</groupId>
+            <artifactId>cf-java-logging-support-logback</artifactId>
+            <version>${cf.logging.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.classic.version}</version>
         </dependency>
     </dependencies>
 

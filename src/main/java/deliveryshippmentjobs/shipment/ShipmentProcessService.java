@@ -40,16 +40,17 @@ public class ShipmentProcessService {
 
         List<ShipmentProcess> shipmentProcesses = readEntitiesService.readShipments(taskConfiguration);
         log.info("JOB ID {} : {} shipments extracted", jobId, shipmentProcesses.size());
-//        Set<String> altKeys = shipmentProcesses.stream().map(ShipmentProcess::getAltKey).collect(Collectors.toSet());
-//        log.info("JOB ID {} : Shipments altKeys extracted {}", jobId, String.join(", ", altKeys));
+        Set<String> altKeys = shipmentProcesses.stream().map(ShipmentProcess::getAltKey).collect(Collectors.toSet());
+        log.debug("JOB ID {} : Shipments altKeys extracted {}", jobId, String.join(", ", altKeys));
 
-//        shipmentProcesses.forEach(shipment -> {
-//            ShipmentProcessDeliveriesWrapper deliveriesWrapper = shipment.getDeliveriesWrapper();
-//            if (deliveriesWrapper != null) {
-//                postCompleteShipmentEvent(shipment, deliveriesWrapper, taskConfiguration);
-//            }
-//        });
-        postDevEvents(taskConfiguration);
+        shipmentProcesses.forEach(shipment -> {
+            ShipmentProcessDeliveriesWrapper deliveriesWrapper = shipment.getDeliveriesWrapper();
+            if (deliveriesWrapper != null) {
+                postCompleteShipmentEvent(shipment, deliveriesWrapper, taskConfiguration);
+            }
+        });
+
+        //        postDevEvents(taskConfiguration);
     }
 
     private void postDevEvents(TaskConfiguration taskConfiguration) {
