@@ -22,7 +22,7 @@ public class PostEventsService {
     private final ODataDestinationClient oDataDestinationClient;
 
     public void postEvent(PostEventDTO eventDTO, Entity event, TaskConfiguration taskConfiguration) {
-        long jobId = taskConfiguration.getJobId();
+        String jobId = taskConfiguration.getJobId();
         try {
             String altKey = eventDTO.getAltKey();
             String reasonCode = taskConfiguration.getReasonCode();

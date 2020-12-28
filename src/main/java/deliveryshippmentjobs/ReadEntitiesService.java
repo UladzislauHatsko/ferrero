@@ -42,7 +42,7 @@ public class ReadEntitiesService {
     private final ODataDestinationClient oDataDestinationClient;
 
     public List<DeliveryProcess> readDeliveries(TaskConfiguration taskConfiguration) {
-        long jobId = taskConfiguration.getJobId();
+        String jobId = taskConfiguration.getJobId();
         try {
             final String deliveryType = taskConfiguration.getDeliveryType();
             final Integer daysBack = taskConfiguration.getDaysBack();
@@ -87,7 +87,7 @@ public class ReadEntitiesService {
     }
 
     public List<ShipmentProcess> readShipments(TaskConfiguration taskConfiguration) {
-        long jobId = taskConfiguration.getJobId();
+        String jobId = taskConfiguration.getJobId();
         try {
             log.info("JOB ID {} : Extract ShipmentProcess by criteria: statuses = {}", jobId, taskConfiguration.getShipmentStatus());
             String shipmentQuery = new ODataQueryBuilder(SHIPMENT_PROCESS).withExpandField("deliveries/delivery").buildUrl();

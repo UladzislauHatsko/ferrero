@@ -1,7 +1,8 @@
 package deliveryshippmentjobs;
 
-import deliveryshippmentjobs.model.TaskConfigurationRepository;
-import lombok.AllArgsConstructor;
+import deliveryshippmentjobs.model.TaskConfigurationRepositoryCustom;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.TaskScheduler;
@@ -18,11 +19,12 @@ import java.util.concurrent.ScheduledFuture;
  * @author uladzislau.hatsko
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Slf4j
 public class SchedulingService implements SchedulingConfigurer {
 
     private final TaskScheduler scheduler;
-    private final TaskConfigurationRepository taskConfigurationRepository;
+    private final TaskConfigurationRepositoryCustom taskConfigurationRepository;
     private final Map<Integer, ScheduledFuture<?>> jobsMap;
     private final TaskExecutionService taskExecutionService;
 
@@ -35,7 +37,7 @@ public class SchedulingService implements SchedulingConfigurer {
         scheduledTaskRegistrar.setScheduler(scheduler);
 
         taskConfigurationRepository.findAll().forEach(
-                it -> scheduler.schedule(() -> taskExecutionService.executeTask(it.getJobId()),
+                it -> scheduler.schedule(() -> taskExecutionService.executeTask(it),
                         new CronTrigger(it.getCron(), TimeZone.getTimeZone(TimeZone.getDefault().getID()))));
     }
 
@@ -43,7 +45,7 @@ public class SchedulingService implements SchedulingConfigurer {
         ScheduledFuture<?> scheduledTask = jobsMap.get(id);
         if (scheduledTask != null) {
             scheduledTask.cancel(true);
-            jobsMap.put(id, null);
+            jobsMap.remove(id);
         }
     }
 }

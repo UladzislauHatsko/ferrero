@@ -27,13 +27,13 @@ public class DeliveryProcessService {
     private final ReadEntitiesService readEntitiesService;
 
     public void processDeliveryTask(TaskConfiguration taskConfiguration) {
-        long jobId = taskConfiguration.getJobId();
+        String jobId = taskConfiguration.getJobId();
         log.info("JOB ID {} : execute delivery job", jobId);
 
         List<DeliveryProcess> deliveryProcesses = readEntitiesService.readDeliveries(taskConfiguration);
         log.info("JOB ID {} : {} DeliveryProcesses extracted", jobId, deliveryProcesses.size());
-        Set<String> altKeys = deliveryProcesses.stream().map(DeliveryProcess::getAltKey).collect(Collectors.toSet());
-        log.debug("JOB ID {} : DeliveryProcess altKeys extracted : {}", jobId, String.join(", ", altKeys));
+        Set<String> altKeys = deliveryProcesses.stream().map(DeliveryProcess::getTrackingId).collect(Collectors.toSet());
+        log.debug("JOB ID {} : DeliveryProcess trackingIds extracted : {}", jobId, String.join(", ", altKeys));
 
         postDeliveryCompleteEvent(taskConfiguration, deliveryProcesses);
     }

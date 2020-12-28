@@ -14,7 +14,7 @@ public class TaskConfiguration {
 
     @Id
     @Column(name = "JOB_ID")
-    private long jobId;
+    private String jobId;
     @Column(name = "OBJECT_TYPE")
     private String objectType;
     @Column(name = "DELIVERY_TYPE")
@@ -34,29 +34,11 @@ public class TaskConfiguration {
     @Column(name = "CRON")
     private String cron;
 
-    public TaskConfiguration(long jobId, String objectType, String cron, String deliveryType, Integer daysBack, String referenceDate, String shippingPoint,
-            String deliveryStatus) {
-        this.jobId = jobId;
-        this.cron = cron;
-        this.deliveryType = deliveryType;
-        this.daysBack = daysBack;
-        this.referenceDate = referenceDate;
-        this.shippingPoint = shippingPoint;
-        this.deliveryStatus = deliveryStatus;
-        this.objectType = objectType;
-    }
-
-    public TaskConfiguration(long jobId, String objectType, String cron) {
-        this.jobId = jobId;
-        this.cron = cron;
-        this.objectType = objectType;
-    }
-
     public TaskConfiguration() {
 
     }
 
-    public TaskConfiguration(long jobId, String objectType, String deliveryType, String shippingPoint, String deliveryStatus, Integer daysBack,
+    public TaskConfiguration(String jobId, String objectType, String deliveryType, String shippingPoint, String deliveryStatus, Integer daysBack,
             String shipmentStatus, String reasonCode, String cron) {
         this.jobId = jobId;
         this.objectType = objectType;
@@ -69,11 +51,11 @@ public class TaskConfiguration {
         this.cron = cron;
     }
 
-    public long getJobId() {
+    public String getJobId() {
         return jobId;
     }
 
-    public void setJobId(long jobId) {
+    public void setJobId(String jobId) {
         this.jobId = jobId;
     }
 

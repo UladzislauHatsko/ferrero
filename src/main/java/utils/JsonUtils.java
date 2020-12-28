@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.List;
 
 import static java.lang.String.format;
 import static org.apache.commons.lang3.Validate.notBlank;
@@ -45,5 +46,15 @@ public final class JsonUtils {
             log.error("Cannot parse string '{}' to object {}", jsonString, clazz, e);
         }
         return null;
+    }
+
+    public static <T> List<T> fromList(String jsonString, Class<T> clazz) {
+        notBlank(jsonString);
+        try {
+            return MAPPER_WITHOUT_ROOT_NAME.readValue(jsonString, MAPPER_WITHOUT_ROOT_NAME.getTypeFactory().constructCollectionType(List.class, clazz));
+        } catch (IOException e) {
+            log.error("Cannot parse string '{}' to object list {}", jsonString, clazz);
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 }

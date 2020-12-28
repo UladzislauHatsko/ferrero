@@ -1,0 +1,16 @@
+[
+  {
+    "jobId": "1",
+    "objectType": "SHIPMENT",
+    "shipmentStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 20",
+    "reasonCode": "Technical closure",
+    "cron": "0 */1 * * * *"
+  },
+  {
+    "jobId": "1",
+    "objectType": "SHIPMENT",
+    "shipmentStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 20",
+    "reasonCode": "Technical closure",
+    "cron": "0 */1 * * * *"
+  }
+]
