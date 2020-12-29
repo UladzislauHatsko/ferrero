@@ -11,9 +11,13 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.ScheduledFuture;
+
+import static java.util.Collections.singletonList;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 /**
  * @author uladzislau.hatsko
@@ -22,6 +26,8 @@ import java.util.concurrent.ScheduledFuture;
 @RequiredArgsConstructor
 @Slf4j
 public class SchedulingService implements SchedulingConfigurer {
+
+    private static final String DEFAULT_CRON = "0 0 7,19 * * *";
 
     private final TaskScheduler scheduler;
     private final TaskConfigurationRepositoryCustom taskConfigurationRepository;
@@ -37,8 +43,11 @@ public class SchedulingService implements SchedulingConfigurer {
         scheduledTaskRegistrar.setScheduler(scheduler);
 
         taskConfigurationRepository.findAll().forEach(
-                it -> scheduler.schedule(() -> taskExecutionService.executeTask(it),
-                        new CronTrigger(it.getCron(), TimeZone.getTimeZone(TimeZone.getDefault().getID()))));
+                it -> {
+                    List<String> crons = isEmpty(it.getCron()) ? singletonList(DEFAULT_CRON) : it.getCron();
+                    crons.forEach(cron -> scheduler
+                            .schedule(() -> taskExecutionService.executeTask(it), new CronTrigger(cron, TimeZone.getTimeZone(TimeZone.getDefault().getID()))));
+                });
     }
 
     public void removeTaskFromScheduler(int id) {

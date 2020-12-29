@@ -1,54 +1,25 @@
 package deliveryshippmentjobs.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
 
 /**
  * @author uladzislau.hatsko
  */
-@Entity
-@Table(name = "JOB_CONFIGURATION")
 public class TaskConfiguration {
 
-    @Id
-    @Column(name = "JOB_ID")
     private String jobId;
-    @Column(name = "OBJECT_TYPE")
     private String objectType;
-    @Column(name = "DELIVERY_TYPE")
     private String deliveryType;
-    @Column(name = "SHIPPING_POINT")
     private String shippingPoint;
-    @Column(name = "DELIVERY_STATUS")
     private String deliveryStatus;
-    @Column(name = "DAYS_BACK")
     private Integer daysBack;
-    @Column(name = "SHIPMENT_STATUS")
     private String shipmentStatus;
-    @Column(name = "REASON_CODE")
     private String reasonCode;
-    @Column(name = "REFERENCE_DATE")
     private String referenceDate;
-    @Column(name = "CRON")
-    private String cron;
+    private List<String> cron;
 
     public TaskConfiguration() {
 
-    }
-
-    public TaskConfiguration(String jobId, String objectType, String deliveryType, String shippingPoint, String deliveryStatus, Integer daysBack,
-            String shipmentStatus, String reasonCode, String cron) {
-        this.jobId = jobId;
-        this.objectType = objectType;
-        this.deliveryType = deliveryType;
-        this.shippingPoint = shippingPoint;
-        this.deliveryStatus = deliveryStatus;
-        this.daysBack = daysBack;
-        this.shipmentStatus = shipmentStatus;
-        this.reasonCode = reasonCode;
-        this.cron = cron;
     }
 
     public String getJobId() {
@@ -59,11 +30,11 @@ public class TaskConfiguration {
         this.jobId = jobId;
     }
 
-    public String getCron() {
+    public List<String> getCron() {
         return cron;
     }
 
-    public void setCron(String cron) {
+    public void setCron(List<String> cron) {
         this.cron = cron;
     }
 

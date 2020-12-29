@@ -1,16 +1,130 @@
 [
   {
-    "jobId": "1",
+    "jobId": "SHIPMENT",
     "objectType": "SHIPMENT",
     "shipmentStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 20",
     "reasonCode": "Technical closure",
-    "cron": "0 */1 * * * *"
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
   },
   {
-    "jobId": "1",
-    "objectType": "SHIPMENT",
-    "shipmentStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 20",
+    "jobId": "FRANCE_ALL_FLOWS",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZC01, ZNL2, ZI01, ZC05, ZC14",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "FRPA,FRPB,FRDB,FRDC,FRDI,FRDG,FRDL,FRDM,FRDF,FRDJ,FRDO",
+    "daysBack": 5,
+    "referenceDate": "DELIVERY_DATE",
     "reasonCode": "Technical closure",
-    "cron": "0 */1 * * * *"
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "POLAND_NATIONAL_FLOW",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZC01",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "PLDD, PLDB, PLDG, PLDA",
+    "daysBack": 28,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "POLAND_ZOD_DELIVERIES",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZOD",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "PLBA, PLBL, PLBD, PLBH, PLBO, PLBK, PLBB, PLBM, PLBC",
+    "daysBack": 3,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "POLAND_EXPORT_ROAD",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZC01, ZC05, ZC14, ZI01",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "PLBA, PLBL, PLBH, PLBO, PLBB, PLBK, PLBC, PLBM",
+    "daysBack": 7,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "POLAND_ZC05_DELIVERIES",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZC01, ZC05, ZC14, ZI01",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "PLBA, PLBL, PLBH, PLBO, PLBB, PLBK, PLBC, PLBM",
+    "daysBack": 7,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "POLAND_OCEAN",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZC01, ZC05, ZC14, ZI01",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "PLBA, PLBL, PLBH, PLBO, PLBB, PLBK, PLBC, PLBM",
+    "daysBack": 7,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "IBERICA_NATIONAL",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZC01, ZC14, NL",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "ES01, ES02, ES03, ES04, PT03, ESDC, ESFA, ESFB, ESDE",
+    "daysBack": 21,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "GERMANY_CLOSURE_EXPORT_ROAD",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZOX1",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "AL02, CO10, CO20, CO30, CO40, CO50, CO60, CO70, CO80, PW1, RLS, RN7, RW7",
+    "daysBack": 7,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "GERMANY_CLOSURE_DOMESTIC",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZIN, ZLP, ZDI, ZLA",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "AL05, DLK, PW1, RLN, RLO, RLS, RM1, RN7, RS1, RS2, RS4, RSO, RW7",
+    "daysBack": 5,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "GERMANY_CLOSURE_EXPORT_OCEAN",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZOX1",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "AL02, CO10, CO20, CO30, CO40, CO50, CO60, CO70, CO80, PW1, RLS, RN7, RW7",
+    "daysBack": 70,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
+  },
+  {
+    "jobId": "GERMANY_CLOSURE_EXPORT_ROAD_2",
+    "objectType": "DELIVERY",
+    "deliveryType": "ZOX1",
+    "deliveryStatus": "10, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 20",
+    "shippingPoint" : "AL02, CO10, CO20, CO30, CO40, CO50, CO60, CO70, CO80, PW1, RLS, RN7, RW7",
+    "daysBack": 21,
+    "referenceDate": "DELIVERY_DATE",
+    "reasonCode": "Technical closure",
+    "cron": ["0 0 7 * * *", "0 0 19 * * *"]
   }
 ]
