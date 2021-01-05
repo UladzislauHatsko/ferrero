@@ -15,6 +15,7 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ShipmentProcess {
 
+    public static final String SHIPMENT_STATUS_CODE = "shipmentStatus_code";
     @JsonProperty("id")
     private String id;
 
@@ -114,7 +115,7 @@ public class ShipmentProcess {
     @JsonProperty("processStatus_code")
     private String processStatus;
 
-    @JsonProperty("shipmentStatus_code")
+    @JsonProperty(SHIPMENT_STATUS_CODE)
     private String shipmentStatus;
 
     @JsonProperty("deliveries")

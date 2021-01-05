@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import utils.FormatUtils;
 
 import java.time.Instant;
 import java.util.List;
@@ -24,6 +25,7 @@ import static deliveryshippmentjobs.model.DeliveryProcess.PLAN_LOADING_DATE;
 import static deliveryshippmentjobs.model.DeliveryProcess.PLAN_UNLOADING_DATE;
 import static deliveryshippmentjobs.model.Entity.DELIVERY_PROCESS;
 import static deliveryshippmentjobs.model.Entity.SHIPMENT_PROCESS;
+import static deliveryshippmentjobs.model.ShipmentProcess.SHIPMENT_STATUS_CODE;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.Collections.emptyList;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -90,14 +92,13 @@ public class ReadEntitiesService {
         String jobId = taskConfiguration.getJobId();
         try {
             log.info("JOB ID {} : Extract ShipmentProcess by criteria: statuses = {}", jobId, taskConfiguration.getShipmentStatus());
-            String shipmentQuery = new ODataQueryBuilder(SHIPMENT_PROCESS).withExpandField("deliveries/delivery").buildUrl();
-            List<ShipmentProcess> shipmentProcesses = oDataDestinationClient.get(shipmentQuery, ShipmentProcessWrapper.class).getShipmentProcesses();
-            return shipmentProcesses
-                    .stream()
-                    .filter(it -> isBlank(taskConfiguration.getShipmentStatus()) ||
-                            splitStringListValue(taskConfiguration.getShipmentStatus()).stream()
-                                    .anyMatch(status -> areStatusEqual(it.getShipmentStatus(), status)))
-                    .collect(Collectors.toList());
+            List<String> statuses =
+                    splitStringListValue(taskConfiguration.getShipmentStatus()).stream().map(FormatUtils::unifyStatusLength).collect(Collectors.toList());
+            String shipmentQuery = new ODataQueryBuilder(SHIPMENT_PROCESS)
+                    .withExpandField("deliveries/delivery")
+                    .withFilterIn(SHIPMENT_STATUS_CODE, statuses)
+                    .buildUrl();
+            return oDataDestinationClient.get(shipmentQuery, ShipmentProcessWrapper.class).getShipmentProcesses();
         } catch (Exception ex) {
             log.error("JOB ID {} : Reading ShipmentProcess failed with message {}", jobId, ex.getMessage());
             return emptyList();

@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  */
 public final class FormatUtils {
 
-    private static final int STATUS_LENGTH = 20;
+    private static final int STATUS_LENGTH = 3;
     private static final String SEPARATOR = ",";
 
     private FormatUtils() {
