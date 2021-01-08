@@ -67,10 +67,11 @@ public class ShipmentProcessService {
             } else if (areStatusEqual(STATUS_970, status)) {
                 postEventsService.postEvent(eventDTO, SHIPMENT_COMPLETED_UNPLANNED_EVENT, taskConfiguration);
             }
+        } else if (deliveryStatuses.stream()
+                .anyMatch(status -> !areStatusEqual(STATUS_980, status) || !areStatusEqual(STATUS_970, status) || !areStatusEqual(STATUS_990, status))) {
+            log.info("JOB ID {} : ShipmentProcess with trackingId {} still has opened deliveries", taskConfiguration.getJobId(), shipment.getTrackingId());
         } else if (deliveryStatuses.stream().anyMatch(status -> areStatusEqual(STATUS_990, status))) {
             postEventsService.postEvent(eventDTO, SHIPMENT_COMPLETED_WITH_ISSUES_EVENT, taskConfiguration);
-        } else if (deliveryStatuses.stream().anyMatch(status -> !areStatusEqual(STATUS_980, status) || !areStatusEqual(STATUS_970, status))) {
-            log.info("JOB ID {} : ShipmentProcess with trackingId {} still has opened deliveries", taskConfiguration.getJobId(), shipment.getTrackingId());
         } else if (deliveryStatuses.stream().anyMatch(status -> areStatusEqual(STATUS_980, status) || areStatusEqual(STATUS_970, status))) {
             postEventsService.postEvent(eventDTO, SHIPMENT_COMPLETED_UNPLANNED_EVENT, taskConfiguration);
         }
