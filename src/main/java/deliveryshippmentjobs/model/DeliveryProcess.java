@@ -158,4 +158,7 @@ public class DeliveryProcess {
 
     @JsonProperty("deliveryStatus_code")
     private String deliveryStatusCode;
+
+    @JsonProperty("vehicleType")
+    private String vehicleType;
 }

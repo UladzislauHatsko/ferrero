@@ -51,9 +51,10 @@ public class ReadEntitiesService {
             final String referenceDate = taskConfiguration.getReferenceDate();
             final String shippingPointConfiguration = taskConfiguration.getShippingPoint();
             final String statusStringConfiguration = taskConfiguration.getDeliveryStatus();
+            final String vehicleType = taskConfiguration.getVehicleType();
             log.info(
-                    "JOB ID {} : Extract DeliveryProcess by criteria deliveryTypes = {}, daysBack = {}, referenceDate = {}, shippingPoints = {}, statuses = {}",
-                    jobId, deliveryType, daysBack, referenceDate, shippingPointConfiguration, statusStringConfiguration);
+                    "JOB ID {} : Extract DeliveryProcess by criteria deliveryTypes = {}, daysBack = {}, referenceDate = {}, shippingPoints = {}, statuses = {}, vehicleType = {}",
+                    jobId, deliveryType, daysBack, referenceDate, shippingPointConfiguration, statusStringConfiguration, vehicleType);
 
             ODataQueryBuilder queryBuilder = new ODataQueryBuilder(DELIVERY_PROCESS);
             if (isNotBlank(deliveryType)) {
@@ -80,7 +81,9 @@ public class ReadEntitiesService {
                         splitStringListValue(shippingPointConfiguration).stream().anyMatch(point -> StringUtils.equals(point, it.getShippingPoint()));
                 boolean hasValidStatus = isBlank(statusStringConfiguration) ||
                         splitStringListValue(statusStringConfiguration).stream().anyMatch(status -> areStatusEqual(it.getDeliveryStatusCode(), status));
-                return hasValidShippingPoint && hasValidStatus;
+                boolean hasValidVehicleType = isBlank(vehicleType) ||
+                        splitStringListValue(vehicleType).stream().anyMatch(vehicle -> StringUtils.equals(it.getVehicleType(), vehicle));
+                return hasValidShippingPoint && hasValidStatus && hasValidVehicleType;
             }).collect(Collectors.toList());
         } catch (Exception ex) {
             log.error("JOB ID {} : Reading DeliveryProcess failed with message {}", jobId, ex.getMessage());

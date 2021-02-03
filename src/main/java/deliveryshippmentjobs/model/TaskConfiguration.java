@@ -16,6 +16,7 @@ public class TaskConfiguration {
     private String shipmentStatus;
     private String reasonCode;
     private String referenceDate;
+    private String vehicleType;
     private List<String> cron;
 
     public TaskConfiguration() {
@@ -100,5 +101,13 @@ public class TaskConfiguration {
 
     public void setReferenceDate(String referenceDate) {
         this.referenceDate = referenceDate;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
     }
 }
