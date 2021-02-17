@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static deliveryshippmentjobs.TaskExecutionService.DELIVERY_DATE;
 import static deliveryshippmentjobs.TaskExecutionService.GOODS_ISSUE_DATE;
+import static deliveryshippmentjobs.model.DeliveryProcess.DELIVERY_STATUS_CODE;
 import static deliveryshippmentjobs.model.DeliveryProcess.DELIVERY_TYPE;
 import static deliveryshippmentjobs.model.DeliveryProcess.PLAN_LOADING_DATE;
 import static deliveryshippmentjobs.model.DeliveryProcess.PLAN_UNLOADING_DATE;
@@ -60,6 +61,11 @@ public class ReadEntitiesService {
             if (isNotBlank(deliveryType)) {
                 queryBuilder.withFilterIn(DELIVERY_TYPE, splitStringListValue(deliveryType));
             }
+            if (isNotBlank(statusStringConfiguration)) {
+                List<String> statuses =
+                        splitStringListValue(statusStringConfiguration).stream().map(FormatUtils::unifyStatusLength).collect(Collectors.toList());
+                queryBuilder.withFilterIn(DELIVERY_STATUS_CODE, statuses);
+            }
 
             if (daysBack == null || referenceDate == null) {
                 log.warn("JOB ID {} : DaysBack or ReferenceDate is not configured", jobId);
@@ -72,8 +78,13 @@ public class ReadEntitiesService {
                 }
             }
 
-            String deliveryQuery = queryBuilder.buildUrl();
-            List<DeliveryProcess> deliveryProcesses = oDataDestinationClient.get(deliveryQuery, DeliveryProcessWrapper.class).getDeliveryProcesses();
+            String deliveryQuery = queryBuilder.withInlineCount().buildUrl();
+            DeliveryProcessWrapper deliveryProcessWrapper = oDataDestinationClient.get(deliveryQuery, DeliveryProcessWrapper.class);
+            List<DeliveryProcess> deliveryProcesses = deliveryProcessWrapper.getDeliveryProcesses();
+            while (deliveryProcessWrapper.getInlineCount() - deliveryProcesses.size() > 0) {
+                deliveryProcesses.addAll(oDataDestinationClient.get(deliveryQuery + "&$skip=" + deliveryProcesses.size(), DeliveryProcessWrapper.class)
+                        .getDeliveryProcesses());
+            }
 
             return deliveryProcesses.stream().filter(it -> {
 
@@ -100,8 +111,15 @@ public class ReadEntitiesService {
             String shipmentQuery = new ODataQueryBuilder(SHIPMENT_PROCESS)
                     .withExpandField("deliveries/delivery")
                     .withFilterIn(SHIPMENT_STATUS_CODE, statuses)
+                    .withInlineCount()
                     .buildUrl();
-            return oDataDestinationClient.get(shipmentQuery, ShipmentProcessWrapper.class).getShipmentProcesses();
+            ShipmentProcessWrapper shipmentProcessWrapper = oDataDestinationClient.get(shipmentQuery, ShipmentProcessWrapper.class);
+            List<ShipmentProcess> shipmentProcesses = shipmentProcessWrapper.getShipmentProcesses();
+            while (shipmentProcessWrapper.getInlineCount() - shipmentProcesses.size() > 0) {
+                shipmentProcesses.addAll(oDataDestinationClient.get(shipmentQuery + "&$skip=" + shipmentProcesses.size(), ShipmentProcessWrapper.class)
+                        .getShipmentProcesses());
+            }
+            return shipmentProcesses;
         } catch (Exception ex) {
             log.error("JOB ID {} : Reading ShipmentProcess failed with message {}", jobId, ex.getMessage());
             return emptyList();

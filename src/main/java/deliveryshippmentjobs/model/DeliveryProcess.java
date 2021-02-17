@@ -18,6 +18,8 @@ public class DeliveryProcess {
     public static final String DELIVERY_TYPE = "deliveryType";
     public static final String PLAN_UNLOADING_DATE = "planUnloadingDate";
     public static final String PLAN_LOADING_DATE = "planLoadingDate";
+    public static final String DELIVERY_STATUS_CODE = "deliveryStatus_code";
+    public static final String SHIPPING_POINT = "shippingPoint";
 
     @JsonProperty("id")
     private String id;
@@ -138,7 +140,7 @@ public class DeliveryProcess {
     @JsonProperty("salesOrganization")
     private String salesOrganization;
 
-    @JsonProperty("shippingPoint")
+    @JsonProperty(SHIPPING_POINT)
     private String shippingPoint;
 
     @JsonProperty("shippingType")
@@ -156,7 +158,7 @@ public class DeliveryProcess {
     @JsonProperty("deliveryLifeCycleStatus_code")
     private String deliveryLifeCycleStatusCode;
 
-    @JsonProperty("deliveryStatus_code")
+    @JsonProperty(DELIVERY_STATUS_CODE)
     private String deliveryStatusCode;
 
     @JsonProperty("vehicleType")

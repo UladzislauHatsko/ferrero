@@ -17,4 +17,7 @@ public class ShipmentProcessWrapper {
 
     @JsonProperty("results")
     private List<ShipmentProcess> shipmentProcesses;
+
+    @JsonProperty("__count")
+    private int inlineCount;
 }

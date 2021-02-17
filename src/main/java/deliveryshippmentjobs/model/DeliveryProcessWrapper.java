@@ -15,6 +15,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeliveryProcessWrapper {
 
+    @JsonProperty("__count")
+    private int inlineCount;
+
     @JsonProperty("results")
     private List<DeliveryProcess> deliveryProcesses;
 }

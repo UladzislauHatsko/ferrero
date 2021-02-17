@@ -22,6 +22,7 @@ public class ODataQueryBuilder {
     private final String entity;
     private final Set<String> expandFields;
     private final List<String> filters;
+    private boolean inlineCount;
 
     public ODataQueryBuilder(Entity entity) {
         this.entity = entity.getValue();
@@ -73,6 +74,11 @@ public class ODataQueryBuilder {
         return this;
     }
 
+    public ODataQueryBuilder withInlineCount() {
+        inlineCount = true;
+        return this;
+    }
+
     public String buildUrl() {
 
         // Concatenate the internal components...
@@ -89,6 +95,10 @@ public class ODataQueryBuilder {
         // filter parameters
         if (!isEmpty(filters)) {
             url.append("&$filter=").append(String.join(" and ", filters));
+        }
+
+        if (inlineCount) {
+            url.append("&$inlinecount=allpages");
         }
 
         return url.toString();

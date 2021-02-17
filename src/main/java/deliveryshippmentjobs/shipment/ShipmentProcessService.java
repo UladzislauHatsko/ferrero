@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,13 +43,16 @@ public class ShipmentProcessService {
         Set<String> altKeys = shipmentProcesses.stream().map(ShipmentProcess::getTrackingId).collect(Collectors.toSet());
         log.debug("JOB ID {} : Shipments trackingIds extracted {}", jobId, String.join(", ", altKeys));
 
-        shipmentProcesses.stream()
-                .forEach(shipment -> {
-                    ShipmentProcessDeliveriesWrapper deliveriesWrapper = shipment.getDeliveriesWrapper();
-                    if (deliveriesWrapper != null) {
-                        postCompleteShipmentEvent(shipment, deliveriesWrapper, taskConfiguration);
-                    }
-                });
+        long shipmentsWithDeliveries = shipmentProcesses.stream().filter(it -> it.getDeliveriesWrapper() != null &&
+                it.getDeliveriesWrapper().getShipmentProcessDeliveries() != null && it.getDeliveriesWrapper().getShipmentProcessDeliveries().size() > 0)
+                .count();
+        log.info("JOB ID {} : {} shipments with deliveries extracted", jobId, shipmentsWithDeliveries);
+        shipmentProcesses.forEach(shipment -> {
+            ShipmentProcessDeliveriesWrapper deliveriesWrapper = shipment.getDeliveriesWrapper();
+            if (deliveriesWrapper != null) {
+                postCompleteShipmentEvent(shipment, deliveriesWrapper, taskConfiguration);
+            }
+        });
     }
 
     private void postCompleteShipmentEvent(ShipmentProcess shipment, ShipmentProcessDeliveriesWrapper deliveriesWrapper, TaskConfiguration taskConfiguration) {
